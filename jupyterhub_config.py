@@ -71,7 +71,10 @@ c.Authenticator.admin_users = {'admin'}
 c.Authenticator.allow_all = True
 
 # Other configurations
-c.JupyterHub.bind_url = 'http://:8000'
+if env == 'production':
+    c.JupyterHub.bind_url = 'http://0.0.0.0:8080'
+else:
+    c.JupyterHub.bind_url = 'http://:8000'
 c.Spawner.default_url = '/lab'
 c.Spawner.args = ['--allow-root']
 c.Spawner.start_timeout = 60

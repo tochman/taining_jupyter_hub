@@ -34,7 +34,8 @@ RUN deno jupyter --install
 USER root
 
 # Install JupyterHub, notebook, and psycopg2 for PostgreSQL as root
-RUN pip install jupyterhub notebook psycopg2-binary bcrypt
+RUN pip install jupyterhub notebook psycopg2 bcrypt sqlalchemy
+
 
 # Install configurable-http-proxy for JupyterHub
 RUN npm install -g configurable-http-proxy

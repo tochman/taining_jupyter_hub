@@ -26,7 +26,6 @@ RUN curl -fsSL https://deno.land/install.sh | sh
 # Set environment variables for Deno
 ENV DENO_INSTALL="/home/jupyterhub/.deno"
 ENV PATH="$DENO_INSTALL/bin:$PATH"
-ENV OPENAI_API_KEY="your_openai_key_here"
 
 # Install the Deno Jupyter kernel as the jupyterhub user
 RUN deno jupyter --install

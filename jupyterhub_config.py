@@ -12,6 +12,23 @@ class CustomSpawner(SimpleLocalProcessSpawner):
         username = self.user.name
         home_dir = os.path.join("/srv/jupyterhub/home", username)
         shared_dir = "/srv/data/langchain_basics"
+        user_link = os.path.join(home_dir, "langchain_basics")
+
+        # Ensure the user home directory exists
+        if not os.path.exists(home_dir):
+            os.makedirs(home_dir)
+
+        # Copy the shared folder to the user's directory
+        if not os.path.exists(user_link):
+            shutil.copytree(shared_dir, user_link)
+            print(f"Copied shared folder for {username} to {user_link}")
+
+        return super().start()
+
+    def start(self):
+        username = self.user.name
+        home_dir = os.path.join("/srv/jupyterhub/home", username)
+        shared_dir = "/srv/data/langchain_basics"
         user_dir = os.path.join(home_dir, "langchain_basics")
 
         # Ensure the user home directory exists

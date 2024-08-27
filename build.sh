@@ -9,6 +9,11 @@ VOLUME_MAPPING="$(pwd)/home:/srv/jupyterhub/home"
 # Check if the environment variable is passed
 ENVIRONMENT=${1:-local}
 
+# Load environment variables from .env file
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
 # Function to stop the container
 stop_container() {
     if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
@@ -45,6 +50,7 @@ build_and_run() {
     echo "Running Docker container in $ENVIRONMENT mode..."
     docker run -d -p $PORT_MAPPING -v $VOLUME_MAPPING --name $CONTAINER_NAME \
         -e ENV=$ENVIRONMENT \
+        -e OPENAI_API_KEY=$OPENAI_API_KEY \
         $IMAGE_NAME
 
     # Output the status

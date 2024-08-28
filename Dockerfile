@@ -33,9 +33,14 @@ RUN deno jupyter --install
 # Switch back to root user to move the kernel to the global directory
 USER root
 
-# Install JupyterHub, notebook, and psycopg2 for PostgreSQL as root
-RUN pip install jupyterhub notebook psycopg2 bcrypt sqlalchemy
+# Create folders
+RUN mkdir -p /var/log/jupyterhub && chown -R jupyterhub:jupyterhub /var/log/jupyterhub
 
+
+# Install JupyterHub, notebook, and psycopg2 for PostgreSQL as root
+# RUN pip install jupyterhub notebook psycopg2-binary bcrypt sqlalchemy
+
+RUN pip install jupyterhub notebook psycopg2-binary bcrypt sqlalchemy==1.4.22
 
 # Install configurable-http-proxy for JupyterHub
 RUN npm install -g configurable-http-proxy
